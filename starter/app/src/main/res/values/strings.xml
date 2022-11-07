@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">MovieStore</string>
+    <string name="login_txt">Login</string>
+    <string name="signup_txt">Sign Up</string>
+    <string name="email_txt">Email</string>
+    <string name="email_description">Type Your Email</string>
+    <string name="password_txt">Password</string>
+    <string name="store_name">MovieStore</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_str1">Welcome To Movie Store A Movie List App For Adding Your Watch List Movies</string>
+    <string name="welcome_str2">Here You Can Add Your Favourite Movie Information Like Name, Release Year , Director And Rating</string>
+    <string name="instructions_str1">To Add Movies Click The Add Button And Write It\'s Information : Name , Release Year , Director , Rating</string>
+    <string name="instructions_str2">Then Click The Done Button And You Will See The New Movie In The Movie List</string>
+    <string name="movie_name1">Interstellar</string>
+    <string name="movie_year1">2014</string>
+    <string name="movie_director1">Christopher Nolan</string>
+    <string name="movie_rating1">8.6</string>
+    <string name="movie_name2">Spider-Man: No Way Home</string>
+    <string name="movie_year2">2021</string>
+    <string name="movie_director2">Jon Watts</string>
+    <string name="movie_rating2">8.3</string>
+    <string name="movie_name3">Top Gun: Maverick</string>
+    <string name="movie_year3">2022</string>
+    <string name="movie_director3">Joseph Kosinski</string>
+    <string name="movie_rating3">8.4</string>
+    <string name="movie_name4">Free Guy</string>
+    <string name="movie_year4">2021</string>
+    <string name="movie_director4">Shawn Levy</string>
+    <string name="movie_rating4">7.1</string>
+    <string name="movie_name5">Inception</string>
+    <string name="movie_year5">2010</string>
+    <string name="movie_director5">Christopher Nolan</string>
+    <string name="movie_rating5">8.8</string>
+    <string name="movie_year_format">(%s)</string>
+    <string name="login_title">Account</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="instructions_title">Instructions</string>
+    <string name="list_title">List</string>
+    <string name="logout">Log Out</string>
+    <string name="about_title">About</string>
+    <string name="detail_title">Add Movie</string>
+    <string name="movie_name_label">Movie Name</string>
+    <string name="movie_year_label">Movie Year</string>
+    <string name="movie_director_label">Movie Director</string>
+    <string name="movie_rating_label">Movie Rating</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="about">Ahmed Mamdouh Sarg \n
+                        19 years old student at benha faculty of computer science and artificial intelligence\n
+                        started studying android developing using kotlin just month ago
+    </string>
+</resources>

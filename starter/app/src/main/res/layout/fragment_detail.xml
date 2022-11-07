@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DetailFragment">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.udacity.moviestore.MovieViewModel" />
+    </data>
+
+
+<!--to properly align buttons and edit text views and text view labels both
+    linear for the edit texts and text view labels and horizontal for the two buttons
+    and each label with it's edit text view-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/clr_white">
+
+        <TextView
+            android:id="@+id/name_text"
+            style="@style/label_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="16dp"
+            android:text="@string/movie_name_label"
+            app:fontFamily="@font/aldrich"
+            app:layout_constraintBaseline_toBaselineOf="@+id/name_text_box"
+            app:layout_constraintEnd_toStartOf="@+id/name_text_box"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="LabelFor,AutofillHints"/>
+
+        <EditText
+            android:id="@+id/name_text_box"
+            style="@style/textbox_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:inputType="textPersonName"
+            android:text="@={movie.nameValue}"
+            app:layout_constraintBottom_toTopOf="@+id/year_text_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="LabelFor,autofill"/>
+
+        <TextView
+            android:id="@+id/year_text"
+            style="@style/label_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="16dp"
+            android:text="@string/movie_year_label"
+            app:layout_constraintBaseline_toBaselineOf="@+id/year_text_box"
+            app:layout_constraintEnd_toStartOf="@+id/year_text_box"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="LabelFor,AutofillHints"/>
+
+        <EditText
+            android:id="@+id/year_text_box"
+            style="@style/textbox_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:inputType="textPersonName"
+            android:text="@={movie.yearValue}"
+            app:layout_constraintBottom_toTopOf="@+id/director_text_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_text_box"
+            tools:ignore="LabelFor,Autofill"/>
+
+        <TextView
+            android:id="@+id/director_text"
+            style="@style/label_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="16dp"
+            android:text="@string/movie_director_label"
+            app:layout_constraintBaseline_toBaselineOf="@+id/director_text_box"
+            app:layout_constraintEnd_toStartOf="@+id/director_text_box"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="LabelFor,Autofill"/>
+
+        <EditText
+            android:id="@+id/director_text_box"
+            style="@style/textbox_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:inputType="textPersonName"
+            android:text="@={movie.directorValue}"
+            app:layout_constraintBottom_toTopOf="@+id/rating_text_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/year_text_box"
+            tools:ignore="LabelFor,Autofill"/>
+
+        <TextView
+            android:id="@+id/rating_text"
+            style="@style/label_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="16dp"
+            android:text="@string/movie_rating_label"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rating_text_box"
+            app:layout_constraintEnd_toStartOf="@+id/rating_text_box"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="LabelFor,Autofill"/>
+
+        <EditText
+            android:id="@+id/rating_text_box"
+            style="@style/textbox_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="48dp"
+            android:inputType="textPersonName"
+            android:text="@={movie.ratingValue}"
+            app:layout_constraintBottom_toTopOf="@+id/cancel_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/director_text_box"
+            tools:ignore="LabelFor,Autofill"/>
+
+        <Button
+            android:id="@+id/cancel_button"
+            style="@style/login_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:text="@string/cancel"
+            android:onClick="@{() -> movie.onCancel()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/done_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rating_text"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <Button
+            android:id="@+id/done_button"
+            style="@style/login_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:text="@string/done"
+            android:onClick="@{() -> movie.onDone()}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/cancel_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cancel_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

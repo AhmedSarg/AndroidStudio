@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.udacity.moviestore.LoginFragment">
+
+
+<!--used constraint layout to properly align buttons and edit text views both
+    linear for the edit texts and text logo and horizontal for the two buttons-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/border_white_blue">
+
+        <TextView
+            android:id="@+id/store_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:fontFamily="@font/aldrich"
+            android:lineSpacingExtra="10sp"
+            android:text="@string/store_name"
+            android:textColor="@color/clr_orange"
+            android:textSize="@dimen/logo_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/email_text_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
+
+        <EditText
+            android:id="@+id/email_text_box"
+            style="@style/textbox_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:background="@drawable/border_white_orange_r"
+            android:hint="@string/email_txt"
+            android:inputType="textEmailSubject"
+            android:minHeight="48dp"
+            android:textColor="@color/clr_blue"
+            android:textColorHint="@color/clr_orange"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45"
+            tools:ignore="TextContrastCheck,TextContrastCheck,Autofill" />
+
+        <EditText
+            android:id="@+id/password_text_box"
+            style="@style/textbox_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:background="@drawable/border_white_orange_r"
+            android:hint="@string/password_txt"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:padding="@dimen/small_padding"
+            android:textColor="@color/clr_blue"
+            android:textColorHint="@color/clr_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_text_box"
+            app:layout_constraintVertical_bias="0.25"
+            tools:ignore="TextContrastCheck,Autofill" />
+
+        <Button
+            android:id="@+id/login_btn"
+            style="@style/login_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:padding="@dimen/small_padding"
+            android:text="@string/login_txt"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/signup_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_text_box"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/signup_btn"
+            style="@style/login_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:padding="@dimen/small_padding"
+            android:text="@string/signup_txt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/login_btn"
+            app:layout_constraintTop_toBottomOf="@+id/password_text_box"
+            tools:ignore="TextContrastCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

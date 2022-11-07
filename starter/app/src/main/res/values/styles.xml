@@ -1,0 +1,65 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/clr_orange</item>
+        <item name="colorPrimaryDark">@color/clr_blue</item>
+        <item name="colorAccent">@color/clr_white</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="login_btn_style">
+        <item name="android:background">@drawable/border_orange_blue_r</item>
+        <item name="android:fontFamily">@font/aldrich</item>
+        <item name="android:textColor">@color/clr_white</item>
+        <item name="android:textSize">@dimen/btn_font_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textbox_style">
+        <item name="android:background">@drawable/border_white_orange_r</item>
+        <item name="android:ems">10</item>
+        <item name="android:fontFamily">@font/aldrich</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:padding">@dimen/small_padding</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/textbox_font_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/clr_blue</item>
+    </style>
+
+    <style name="welcome_txt_style">
+        <item name="android:fontFamily">@font/aldrich</item>
+        <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
+        <item name="android:padding">@dimen/small_padding</item>
+        <item name="android:textColor">@color/clr_white</item>
+        <item name="android:textSize">@dimen/welcome_font_size</item>
+    </style>
+
+    <style name="instructions_txt_style">
+        <item name="android:fontFamily">@font/aldrich</item>
+        <item name="android:padding">@dimen/small_padding</item>
+        <item name="android:textColor">@color/clr_orange</item>
+        <item name="android:textSize">@dimen/welcome_font_size</item>
+        <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
+    </style>
+
+    <style name="item_img_style">
+        <item name="android:layout_margin">@dimen/small_margin</item>
+    </style>
+
+    <style name="label_style">
+        <item name="android:textColor">@color/clr_blue</item>
+        <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
+        <item name="android:textSize">@dimen/label_font_size</item>
+    </style>
+
+</resources>

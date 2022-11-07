@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">About Me</string>
+    <string name="name">Ahmed Sarg</string>
+    <string name="yellow_star">Yellow Star</string>
+    <string name="bio">Lorem ipsum dolor sit amet,
+        \n\n\n
+        consectetur adipisicing elit. Assumenda aut\n\n
+        \nconsequuntur ea error nisi saepe vel voluptas
+        \nvoluptate! Aliquam aliquid blanditiis cum
+        \neveniet ex expedita, facilis quo quod
+        \nreprehenderit suscipit.</string>
+    <string name="hint_nick">What Is Your Nick Name?</string>
+    <string name="doneBtn">Done</string>
+</resources>

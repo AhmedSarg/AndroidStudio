@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFF7E9</color>
+    <color name="colorPrimaryDark">#1746A2</color>
+    <color name="colorAccent">#FF731D</color>
+    <color name="clr_orange">#FF731D</color>
+    <color name="clr_cyan">#5F9DF7</color>
+    <color name="clr_blue">#1746A2</color>
+    <color name="clr_white">#FFF7E9</color>
+</resources>
