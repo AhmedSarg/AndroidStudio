@@ -16,6 +16,7 @@
 
 package com.example.android.eggtimernotifications.util
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -37,6 +38,7 @@ private val FLAGS = 0
  *
  * @param context, activity context.
  */
+@SuppressLint("WrongConstant")
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
     // Create the content intent for the notification, which launches
     // this activity
@@ -52,8 +54,22 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     )
 
     // TODO: Step 2.0 add style
+    val eggImage = BitmapFactory.decodeResource(
+        applicationContext.resources,
+        R.drawable.cooked_egg
+    )
+    val bigPicStyle = NotificationCompat.BigPictureStyle()
+            .bigPicture(eggImage)
+            .bigLargeIcon(null)
 
     // TODO: Step 2.2 add snooze action
+    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
+    val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
+        applicationContext,
+        REQUEST_CODE,
+        snoozeIntent,
+        FLAGS
+    )
 
     // TODO: Step 1.2 get an instance of NotificationCompat.Builder
     // Build the notification
@@ -75,8 +91,15 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     // TODO: Step 1.13 set content intent
 
         // TODO: Step 2.1 add style to builder
+        .setStyle(bigPicStyle)
+        .setLargeIcon(eggImage)
 
         // TODO: Step 2.3 add snooze action
+        .addAction(
+            R.drawable.egg_icon,
+            applicationContext.getString(R.string.snooze),
+            snoozePendingIntent
+        )
 
         // TODO: Step 2.5 set priority
 
@@ -86,3 +109,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 }
 
 // TODO: Step 1.14 Cancel all notifications
+fun NotificationManager.cancelNotifications() {
+    cancelAll()
+}

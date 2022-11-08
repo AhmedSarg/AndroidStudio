@@ -121,6 +121,11 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
                 // TODO: Step 1.5 get an instance of NotificationManager and call sendNotification
 
                 // TODO: Step 1.15 call cancel notification
+                val notificationManager = ContextCompat.getSystemService(
+                    app,
+                    NotificationManager::class.java
+                ) as NotificationManager
+                notificationManager.cancelAll()
 
                 AlarmManagerCompat.setExactAndAllowWhileIdle(
                     alarmManager,
