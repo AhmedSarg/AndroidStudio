@@ -87,6 +87,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentText(messageBody)
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     // TODO: Step 1.13 set content intent
 
