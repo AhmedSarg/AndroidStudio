@@ -28,6 +28,13 @@
         />
 
         <!-- TODO: Add KeyFrameSet and KeyPosition -->
+        <KeyFrameSet>
+            <KeyPosition
+                app:framePosition="50"
+                app:motionTarget="@id/moon"
+                app:keyPositionType="parentRelative"
+                app:percentY="0.5"/>
+        </KeyFrameSet>
     </Transition>
 
     <!-- Constraints to apply at the start of the animation -->
@@ -49,6 +56,14 @@
                 app:layout_constraintBottom_toBottomOf="@id/moon"
                 app:layout_constraintTop_toTopOf="@id/moon"
         />
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
     <!-- Constraints to apply at the end of the animation -->
