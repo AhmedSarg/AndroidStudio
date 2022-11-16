@@ -28,6 +28,7 @@
         <OnSwipe
                 app:touchAnchorId="@id/moon"
                 app:touchAnchorSide="bottom"
+                app:dragDirection="dragRight"
         />
 
 
