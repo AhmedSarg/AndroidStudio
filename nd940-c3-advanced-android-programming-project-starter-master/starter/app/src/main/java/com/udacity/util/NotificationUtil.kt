@@ -50,7 +50,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentTitle(applicationContext
             .getString(R.string.notification_title))
         .setContentText(messageBody)
-        .setContentIntent(mainPendingIntent)
+        .setContentIntent(detailPendingIntent)
         .setAutoCancel(true)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setStyle(bigPicStyle)

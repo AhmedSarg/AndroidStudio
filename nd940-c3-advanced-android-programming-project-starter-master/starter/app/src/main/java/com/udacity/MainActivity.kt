@@ -89,19 +89,6 @@ class MainActivity : AppCompatActivity() {
 
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
 
-            /*val query = DownloadManager.Query()
-            query.setFilterById(downloadID)
-            val cursor: Cursor = downloadManager.query(query)
-
-            if (cursor.moveToFirst()) {
-                if (cursor.count > 0) {
-                    val statusOfDownload = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                    val fileUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI))
-                    val y = cursor.getInt(cursor.getColumnIndex(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-                    Log.i("ahmed", "$statusOfDownload, $fileUri, $y")
-                }
-            }*/
-
             name = fileName
             status = "Success"
             notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
