@@ -19,6 +19,7 @@
     <string name="file_name">File name:</string>
     <string name="file_status">Status:</string>
     <string name="back">OK</string>
+    <string name="nulll">Null</string>
 
     <string name="choices0">none</string>
     <string name="choices1">glide</string>
