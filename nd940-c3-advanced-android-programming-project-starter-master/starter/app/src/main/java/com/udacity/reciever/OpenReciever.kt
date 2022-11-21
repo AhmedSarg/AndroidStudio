@@ -1,4 +1,5 @@
 package com.udacity.reciever
+/*
 
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -20,4 +21,4 @@ class OpenReciever: BroadcastReceiver() {
             context
         )
     }
-}
+}*/

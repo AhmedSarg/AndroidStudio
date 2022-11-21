@@ -7,9 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
+import com.udacity.DetailActivity
 import com.udacity.MainActivity
 import com.udacity.R
-import com.udacity.reciever.CheckReciever
 
 private val NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
@@ -18,12 +18,11 @@ private val FLAGS = 0
 @SuppressLint("WrongConstant")
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
 
-    val contentIntent = Intent(applicationContext, MainActivity::class.java)
-
-    val contentPendingIntent = PendingIntent.getActivity(
+    val mainIntent = Intent(applicationContext, MainActivity::class.java)
+    val mainPendingIntent = PendingIntent.getActivity(
         applicationContext,
         NOTIFICATION_ID,
-        contentIntent,
+        mainIntent,
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
@@ -35,11 +34,11 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .bigPicture(notificationImage)
         .bigLargeIcon(null)
 
-    val checkIntent = Intent(applicationContext, CheckReciever::class.java)
-    val checkPendingIntent: PendingIntent = PendingIntent.getBroadcast(
+    val detailIntent = Intent(applicationContext, DetailActivity::class.java)
+    val detailPendingIntent: PendingIntent = PendingIntent.getActivity(
         applicationContext,
         REQUEST_CODE,
-        checkIntent,
+        detailIntent,
         FLAGS
     )
 
@@ -51,7 +50,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentTitle(applicationContext
             .getString(R.string.notification_title))
         .setContentText(messageBody)
-        .setContentIntent(contentPendingIntent)
+        .setContentIntent(mainPendingIntent)
         .setAutoCancel(true)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setStyle(bigPicStyle)
@@ -59,7 +58,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .addAction(
             R.drawable.ic_assistant_black_24dp,
             applicationContext.getString(R.string.notification_button),
-            checkPendingIntent
+            detailPendingIntent
         )
     notify(NOTIFICATION_ID, builder.build())
 }

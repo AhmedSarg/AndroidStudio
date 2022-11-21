@@ -1,4 +1,5 @@
 package com.udacity
+/*
 
 import android.app.Application
 import android.app.NotificationManager
@@ -20,4 +21,4 @@ class ViewModel(private val app: Application) : AndroidViewModel(app) {
         notificationManager.cancelAll()
     }
 
-}
+}*/

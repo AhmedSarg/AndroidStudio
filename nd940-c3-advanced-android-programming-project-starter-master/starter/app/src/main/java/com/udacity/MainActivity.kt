@@ -1,13 +1,11 @@
 package com.udacity
 
-import android.app.DownloadManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -27,7 +25,7 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
-    private var downloadID: Long = 0
+    var downloadID: Long = 0
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
@@ -37,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        status = "null"
+        name = "null"
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
@@ -52,16 +53,13 @@ class MainActivity : AppCompatActivity() {
 
         custom_button.setOnClickListener {
             if (radioButton1.isChecked){
-                    download("https://github.com/bumptech/glide.git", "glide")
-                    notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
+                download("https://github.com/bumptech/glide.git", getString(R.string.choice1))
             }
             else if (radioButton2.isChecked) {
-                    download("https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter.git", "project")
-                    notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
+                download("https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter.git", getString(R.string.choice2))
             }
             else if (radioButton3.isChecked){
-                    download("https://github.com/square/retrofit.git", "retrofit")
-                    notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
+                download("https://github.com/square/retrofit.git", getString(R.string.choice3))
             }
             else {
                 Toast.makeText(applicationContext, "Please select the file to download", Toast.LENGTH_SHORT).show()
@@ -81,17 +79,37 @@ class MainActivity : AppCompatActivity() {
             val request = DownloadManager.Request(Uri.parse(url))
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
                 .setMimeType("application/zip")
-                    .setTitle(getString(R.string.app_name))
-                    .setDescription(getString(R.string.app_description))
-                    .setRequiresCharging(false)
-                    .setAllowedOverMetered(true)
-                    .setAllowedOverRoaming(true)
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, File.separator+fileName+".zip")
+                .setTitle(getString(R.string.app_name))
+                .setDescription(getString(R.string.app_description))
+                .setRequiresCharging(false)
+                .setAllowedOverMetered(true)
+                .setAllowedOverRoaming(true)
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, File.separator+fileName+".zip")
 
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
-            Toast.makeText(applicationContext, "Download Okay", Toast.LENGTH_SHORT).show()
+
+            /*val query = DownloadManager.Query()
+            query.setFilterById(downloadID)
+            val cursor: Cursor = downloadManager.query(query)
+
+            if (cursor.moveToFirst()) {
+                if (cursor.count > 0) {
+                    val statusOfDownload = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                    val fileUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI))
+                    val y = cursor.getInt(cursor.getColumnIndex(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+                    Log.i("ahmed", "$statusOfDownload, $fileUri, $y")
+                }
+            }*/
+
+            name = fileName
+            status = "Success"
+            notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
+            Toast.makeText(applicationContext, "Download Success", Toast.LENGTH_SHORT).show()
         } catch(e: Exception) {
+            name = fileName
+            status = "Failed"
+            notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
             Toast.makeText(applicationContext, "Download Failed", Toast.LENGTH_SHORT).show()
         }
     }
@@ -100,6 +118,8 @@ class MainActivity : AppCompatActivity() {
         private const val URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
         private const val CHANNEL_ID = "channelId"
+        var name = "null"
+        var status = "null"
     }
 
     private fun createChannel(channelId: String, channelName: String) {

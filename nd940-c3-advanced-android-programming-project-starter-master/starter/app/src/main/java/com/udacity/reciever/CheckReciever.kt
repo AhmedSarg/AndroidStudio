@@ -1,4 +1,5 @@
 package com.udacity.reciever
+/*
 
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -26,4 +27,4 @@ class CheckReciever: BroadcastReceiver() {
         ) as NotificationManager
         notificationManager.cancelAll()
     }
-}
+}*/
