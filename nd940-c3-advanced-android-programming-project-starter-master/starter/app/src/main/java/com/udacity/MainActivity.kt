@@ -1,18 +1,27 @@
 package com.udacity
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import com.udacity.util.sendNotification
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.io.File
 import java.lang.Exception
 
 
@@ -31,11 +40,31 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
-        custom_button.setOnClickListener {
-            try {
-                download()
-            } catch(e: Exception) {
+        notificationManager = ContextCompat.getSystemService(
+            applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
 
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_channel_name)
+        )
+
+        custom_button.setOnClickListener {
+            if (radioButton1.isChecked){
+                    download("https://github.com/bumptech/glide.git", "glide")
+                    notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
+            }
+            else if (radioButton2.isChecked) {
+                    download("https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter.git", "project")
+                    notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
+            }
+            else if (radioButton3.isChecked){
+                    download("https://github.com/square/retrofit.git", "retrofit")
+                    notificationManager.sendNotification(getString(R.string.notification_description), applicationContext)
+            }
+            else {
+                Toast.makeText(applicationContext, "Please select the file to download", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -46,24 +75,54 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun download() {
-        val request =
-            DownloadManager.Request(Uri.parse(URL))
-                .setTitle(getString(R.string.app_name))
-                .setDescription(getString(R.string.app_description))
-                .setRequiresCharging(false)
-                .setAllowedOverMetered(true)
-                .setAllowedOverRoaming(true)
+    private fun download(url:String, fileName:String) {
+        try {
+            val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val request = DownloadManager.Request(Uri.parse(url))
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+                .setMimeType("application/zip")
+                    .setTitle(getString(R.string.app_name))
+                    .setDescription(getString(R.string.app_description))
+                    .setRequiresCharging(false)
+                    .setAllowedOverMetered(true)
+                    .setAllowedOverRoaming(true)
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, File.separator+fileName+".zip")
 
-        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+            Toast.makeText(applicationContext, "Download Okay", Toast.LENGTH_SHORT).show()
+        } catch(e: Exception) {
+            Toast.makeText(applicationContext, "Download Failed", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {
         private const val URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
         private const val CHANNEL_ID = "channelId"
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.notification_description)
+
+            val notificationManager = this.getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
     }
 
 }

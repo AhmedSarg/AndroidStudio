@@ -20,4 +20,8 @@
     <string name="choices1">glide</string>
     <string name="choices2">loadApp</string>
     <string name="choices3">retrofit</string>
+
+    <string name="notification_channel_id">channel_id</string>
+    <string name="notification_channel_name">Open Status</string>
+    <string name="notification_app_title">LoadApp</string>
 </resources>
