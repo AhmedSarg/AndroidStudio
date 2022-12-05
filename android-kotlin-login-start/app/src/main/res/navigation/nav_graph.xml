@@ -22,18 +22,26 @@
             app:startDestination="@id/mainFragment">
 
     <fragment
-            android:id="@+id/mainFragment"
-            android:name="com.example.android.firebaseui_login_sample.MainFragment"
-            android:label="MainFragment">
+        android:id="@+id/mainFragment"
+        android:name="com.example.android.firebaseui_login_sample.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-            android:id="@+id/settingsFragment"
-            android:name="com.example.android.firebaseui_login_sample.SettingsFragment"
-            android:label="fragment_settings">
+        android:id="@+id/settingsFragment"
+        android:name="com.example.android.firebaseui_login_sample.SettingsFragment"
+        android:label="fragment_settings">
+
     </fragment>
     <fragment
-            android:id="@+id/loginFragment"
-            android:name="com.example.android.firebaseui_login_sample.LoginFragment"
-            android:label="fragment_login"
-            tools:layout="@layout/fragment_login"/>
+        android:id="@+id/loginFragment"
+        android:name="com.example.android.firebaseui_login_sample.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

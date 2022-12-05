@@ -52,7 +52,6 @@ class MainFragment : Fragment() {
         // TODO Remove the two lines below once observeAuthenticationState is implemented.
         binding.welcomeText.text = viewModel.getFactToDisplay(requireContext())
         binding.authButton.text = getString(R.string.login_btn)
-
         return binding.root
     }
 
@@ -63,6 +62,9 @@ class MainFragment : Fragment() {
         binding.authButton.setOnClickListener {
             // TODO call launchSignInFlow when authButton is clicked
             launchSignInFlow()
+        }
+        binding.settingsBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
         }
     }
 
