@@ -113,7 +113,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         enableMyLocation()
         goToDeviceLocation()
         setMapStyle(map)
-        //setLongClick(map)
+        setLongClick(map)
         setPoiClick(map)
     }
 
@@ -214,7 +214,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             Log.e(TAG, "Can't find style")
         }
     }
-/*
+
     private fun setLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
             if (lastMarker != null) {
@@ -232,7 +232,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             binding.button.text = getString(R.string.save)
         }
     }
-*/
+
 
     private fun setPoiClick(map: GoogleMap) {
         map.setOnPoiClickListener { poi ->
