@@ -102,7 +102,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 //      TODO: put a marker to location that the user selected
 //      TODO: call this function after the user confirms on the selected location
         binding.button.setOnClickListener {
-            onLocationSelected()
+            if (lastMarker != null)
+                onLocationSelected()
         }
         return binding.root
     }
