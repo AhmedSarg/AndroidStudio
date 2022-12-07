@@ -79,9 +79,7 @@ class SaveReminderFragment : BaseFragment() {
                 longitude
             )
 
-            //val locations = emptyList<ReminderDataItem>()
-            val geofence = //locations.map {
-                Geofence.Builder()
+            val geofence = Geofence.Builder()
                     .setRequestId(reminder.id)
                     .setCircularRegion(
                         latitude!!,
@@ -91,7 +89,6 @@ class SaveReminderFragment : BaseFragment() {
                     .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
                     .build()
-            //} as Geofence
 
             val geofencingRequest = GeofencingRequest.Builder()
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
@@ -100,28 +97,28 @@ class SaveReminderFragment : BaseFragment() {
 
             geofencingClient = LocationServices.getGeofencingClient(requireActivity())
             //try {
-            //geofencingClient.removeGeofences(geofencePendingIntent)?.run {
-            //    addOnCompleteListener {
-            geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent)
-                ?.run {
-                    addOnSuccessListener {
-                        Toast.makeText(
-                            requireActivity(), "Geofence Added",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        _viewModel.validateAndSaveReminder(
-                            reminder
-                        )
-                    }
-                    addOnFailureListener {
-                        Toast.makeText(
-                            requireActivity(), "Geofence Not Added :(",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+            geofencingClient.removeGeofences(geofencePendingIntent)?.run {
+                addOnCompleteListener {
+                    geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent)
+                        ?.run {
+                            addOnSuccessListener {
+                                Toast.makeText(
+                                    requireActivity(), "Geofence Added",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                _viewModel.validateAndSaveReminder(
+                                    reminder
+                                )
+                            }
+                            addOnFailureListener {
+                                Toast.makeText(
+                                    requireActivity(), "Geofence Not Added :(",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                 }
-            //}
-            //}
+            }
             //} catch (e: Exception) {
             //    Log.i("ahmed", e.message.toString())
             //}

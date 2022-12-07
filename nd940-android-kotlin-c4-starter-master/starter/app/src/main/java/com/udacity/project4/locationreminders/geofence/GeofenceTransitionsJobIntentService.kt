@@ -40,7 +40,6 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
                 JOB_ID,
                 intent
             )
-            Log.i("ahmed", "enqueue")
         }
     }
 
@@ -48,16 +47,12 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
         //TODO: handle the geofencing transition events and
         // send a notification to the user when he enters the geofence area
         //TODO call @sendNotification
-        Log.i("ahmed", "on handle")
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
 
         if (geofencingEvent.hasError()) {
-            Log.i(TAG, "error")
             return
         } else {
-            Log.i("ahmed", "no error")
             if (geofencingEvent.geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-                Log.i("ahmed", "entered area")
                 sendNotification(geofencingEvent.triggeringGeofences)
             }
         }
@@ -67,21 +62,13 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
     private fun sendNotification(triggeringGeofences: List<Geofence>) {
         triggeringGeofences.forEach {
             val requestId = it.requestId
-            Log.i("ahmed", "send noti " + requestId.toString())
             //Get the local repository instance
             val remindersLocalRepository: ReminderDataSource by inject()
-            //val dao = LocalDB.createRemindersDao(this@GeofenceTransitionsJobIntentService)
-            //val remindersLocalRepository = RemindersLocalRepository(dao)
 //        Interaction to the repository has to be through a coroutine scope
             CoroutineScope(coroutineContext).launch(SupervisorJob()) {
-                Log.i("ahmed", "check 1")
                 //get the reminder with the request id
                 val result = remindersLocalRepository.getReminder(requestId)
-                //val result = remindersLocalRepository.getReminder(requestId)
-                Log.i("ahmed", result.toString())
-                Log.i("ahmed", requestId)
                 if (result is Result.Success<ReminderDTO>) {
-                    Log.i("ahmed", "check 2")
                     val reminderDTO = result.data
                     //send a notification to the user with the reminder details
                     com.udacity.project4.utils.sendNotification(
