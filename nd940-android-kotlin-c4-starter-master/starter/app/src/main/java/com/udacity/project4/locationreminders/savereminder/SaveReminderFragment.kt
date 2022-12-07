@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,6 @@ import com.udacity.project4.locationreminders.geofence.GeofenceBroadcastReceiver
 import com.udacity.project4.locationreminders.reminderslist.ReminderDataItem
 import com.udacity.project4.utils.setDisplayHomeAsUpEnabled
 import org.koin.android.ext.android.inject
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 @SuppressLint("UnspecifiedImmutableFlag")
@@ -73,14 +71,22 @@ class SaveReminderFragment : BaseFragment() {
 //           1) add a geofencing request
 //           2) save the reminder to the local db
 
+            val reminder = ReminderDataItem(
+                title,
+                description,
+                location,
+                latitude,
+                longitude
+            )
+
             //val locations = emptyList<ReminderDataItem>()
             val geofence = //locations.map {
                 Geofence.Builder()
-                    .setRequestId(UUID.randomUUID().toString())
+                    .setRequestId(reminder.id)
                     .setCircularRegion(
                         latitude!!,
                         longitude!!,
-                        1000f
+                        20f
                     )
                     .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
@@ -104,13 +110,7 @@ class SaveReminderFragment : BaseFragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                         _viewModel.validateAndSaveReminder(
-                            ReminderDataItem(
-                                title,
-                                description,
-                                location,
-                                latitude,
-                                longitude
-                            )
+                            reminder
                         )
                     }
                     addOnFailureListener {

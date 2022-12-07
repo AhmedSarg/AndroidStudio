@@ -68,7 +68,6 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
         triggeringGeofences.forEach {
             val requestId = it.requestId
             Log.i("ahmed", "send noti " + requestId.toString())
-
             //Get the local repository instance
             val remindersLocalRepository: ReminderDataSource by inject()
             //val dao = LocalDB.createRemindersDao(this@GeofenceTransitionsJobIntentService)
@@ -80,6 +79,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
                 val result = remindersLocalRepository.getReminder(requestId)
                 //val result = remindersLocalRepository.getReminder(requestId)
                 Log.i("ahmed", result.toString())
+                Log.i("ahmed", requestId)
                 if (result is Result.Success<ReminderDTO>) {
                     Log.i("ahmed", "check 2")
                     val reminderDTO = result.data
