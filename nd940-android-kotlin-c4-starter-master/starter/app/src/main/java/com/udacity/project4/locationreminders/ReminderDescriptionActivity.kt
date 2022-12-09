@@ -59,7 +59,7 @@ class ReminderDescriptionActivity : AppCompatActivity(), OnMapReadyCallback {
 //        TODO: Add the implementation of the reminder details
         reminderItem = intent.extras?.getSerializable(EXTRA_ReminderDataItem) as ReminderDataItem
         binding.reminderDataItem = reminderItem
-        binding.textCoordinates.text = "Latitude :" + reminderItem.latitude.toString() + "\nLongitude : " + reminderItem.longitude.toString()
+        binding.textCoordinates.text = "Latitude : " + reminderItem.latitude.toString() + "\nLongitude : " + reminderItem.longitude.toString()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

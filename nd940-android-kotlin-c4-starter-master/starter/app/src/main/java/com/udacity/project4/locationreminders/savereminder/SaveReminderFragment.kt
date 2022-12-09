@@ -80,15 +80,15 @@ class SaveReminderFragment : BaseFragment() {
             )
 
             val geofence = Geofence.Builder()
-                    .setRequestId(reminder.id)
-                    .setCircularRegion(
-                        latitude!!,
-                        longitude!!,
-                        2000f
-                    )
-                    .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-                    .build()
+                .setRequestId(reminder.id)
+                .setCircularRegion(
+                    latitude!!,
+                    longitude!!,
+                    30f
+                )
+                .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .build()
 
             val geofencingRequest = GeofencingRequest.Builder()
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
@@ -96,7 +96,6 @@ class SaveReminderFragment : BaseFragment() {
                 .build()
 
             geofencingClient = LocationServices.getGeofencingClient(requireActivity())
-            //try {
             geofencingClient.removeGeofences(geofencePendingIntent)?.run {
                 addOnCompleteListener {
                     geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent)
@@ -119,10 +118,6 @@ class SaveReminderFragment : BaseFragment() {
                         }
                 }
             }
-            //} catch (e: Exception) {
-            //    Log.i("ahmed", e.message.toString())
-            //}
-
         }
     }
 

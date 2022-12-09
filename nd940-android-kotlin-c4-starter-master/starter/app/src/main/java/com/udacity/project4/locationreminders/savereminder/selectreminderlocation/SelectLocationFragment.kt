@@ -98,8 +98,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 //      TODO: zoom to the user location after taking his permission
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-//      TODO: add style to the map
-//      TODO: put a marker to location that the user selected
 //      TODO: call this function after the user confirms on the selected location
         binding.button.setOnClickListener {
             if (lastMarker != null)
@@ -112,8 +110,10 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         map = googleMap
         enableMyLocation()
         goToDeviceLocation()
+//      TODO: add style to the map
         setMapStyle(map)
-        setLongClick(map)
+        /*setLongClick(map)*/
+//      TODO: put a marker to location that the user selected
         setPoiClick(map)
     }
 
@@ -215,7 +215,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
-    private fun setLongClick(map: GoogleMap) {
+    /*private fun setLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
             if (lastMarker != null) {
                 lastMarker?.remove()
@@ -231,7 +231,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             lng = marker.position.longitude
             binding.button.text = getString(R.string.save)
         }
-    }
+    }*/
 
 
     private fun setPoiClick(map: GoogleMap) {
