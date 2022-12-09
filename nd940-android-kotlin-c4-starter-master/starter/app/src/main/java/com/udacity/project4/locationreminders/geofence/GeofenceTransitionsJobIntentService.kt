@@ -16,7 +16,6 @@ import com.udacity.project4.locationreminders.data.local.RemindersDao
 import com.udacity.project4.locationreminders.data.local.RemindersDatabase
 import com.udacity.project4.locationreminders.data.local.RemindersLocalRepository
 import com.udacity.project4.locationreminders.reminderslist.ReminderDataItem
-import com.udacity.project4.utils.justSend
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext

@@ -84,7 +84,7 @@ class SaveReminderFragment : BaseFragment() {
                     .setCircularRegion(
                         latitude!!,
                         longitude!!,
-                        20f
+                        2000f
                     )
                     .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
