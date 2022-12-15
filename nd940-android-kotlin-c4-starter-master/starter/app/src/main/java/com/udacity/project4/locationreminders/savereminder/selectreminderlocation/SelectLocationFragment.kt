@@ -243,8 +243,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                 MarkerOptions().position(poi.latLng).title(poi.name)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
             )
-            poiMarker.showInfoWindow()
-            str = poiMarker.title
+            poiMarker!!.showInfoWindow()
+            str = poiMarker.title!!
             lat = poiMarker.position.latitude
             lng = poiMarker.position.longitude
             poiMark = poi

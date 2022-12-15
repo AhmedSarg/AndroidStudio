@@ -23,7 +23,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 //Medium Test to test the repository
 @MediumTest
-class RemindersLocalRepositoryTest {
+class RemindersLocalRepositoryAndroidTest {
 
 //    TODO: Add testing implementation to the RemindersLocalRepository.kt
 

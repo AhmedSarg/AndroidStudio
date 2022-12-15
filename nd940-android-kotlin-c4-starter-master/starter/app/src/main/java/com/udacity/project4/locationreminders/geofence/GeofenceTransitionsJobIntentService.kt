@@ -1,20 +1,13 @@
 package com.udacity.project4.locationreminders.geofence
 
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.JobIntentService
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 import com.udacity.project4.locationreminders.data.ReminderDataSource
 import com.udacity.project4.locationreminders.data.dto.ReminderDTO
 import com.udacity.project4.locationreminders.data.dto.Result
-import com.udacity.project4.locationreminders.data.local.LocalDB
-import com.udacity.project4.locationreminders.data.local.RemindersDao
-import com.udacity.project4.locationreminders.data.local.RemindersDatabase
-import com.udacity.project4.locationreminders.data.local.RemindersLocalRepository
 import com.udacity.project4.locationreminders.reminderslist.ReminderDataItem
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
@@ -48,11 +41,11 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
         //TODO call @sendNotification
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
 
-        if (geofencingEvent.hasError()) {
+        if (geofencingEvent!!.hasError()) {
             return
         } else {
             if (geofencingEvent.geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-                sendNotification(geofencingEvent.triggeringGeofences)
+                sendNotification(geofencingEvent.triggeringGeofences!!)
             }
         }
     }
