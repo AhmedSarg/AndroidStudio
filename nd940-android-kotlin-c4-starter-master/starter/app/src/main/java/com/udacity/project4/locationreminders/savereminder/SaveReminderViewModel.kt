@@ -81,13 +81,12 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
         }
         return true
     }
-}
 
-/*
-@Suppress("UNCHECKED_CAST")
-class SaveReminderViewModelFactory (
-    private val remindersRepository: RemindersRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (SaveReminderViewModel(remindersRepository) as T)
-}*/
+    @Suppress("UNCHECKED_CAST")
+    class SaveReminderViewModelFactory (
+        private val reminderDataSource: ReminderDataSource
+    ) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel> create(modelClass: Class<T>) =
+            (SaveReminderViewModel(Application(), reminderDataSource) as T)
+    }
+}
