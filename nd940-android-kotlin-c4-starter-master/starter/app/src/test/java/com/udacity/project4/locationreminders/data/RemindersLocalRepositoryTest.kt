@@ -1,4 +1,4 @@
-package com.udacity.project4.locationreminders.data.local
+package com.udacity.project4.locationreminders.data
 
 import com.udacity.project4.locationreminders.MainCoroutineRule
 import com.udacity.project4.locationreminders.data.FakeDataSource
@@ -15,7 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class RemindersLocalRepositoryTest {
+class FakeDataSourceTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -43,18 +43,9 @@ class RemindersLocalRepositoryTest {
     private val localReminders = listOf(reminder1, reminder2, reminder3).sortedBy { it.id }
     private lateinit var dataSource : FakeDataSource
 
-    //private lateinit var remindersRepository : DefaultRemindersRepository
-    //private lateinit var remindersRepository : RemindersLocalRepository
-
     @Before
     fun createRepository() {
         dataSource = FakeDataSource(localReminders.toMutableList())
-        /*remindersRepository = DefaultRemindersRepository(
-            dataSource, Dispatchers.Main
-        )*/
-        /*remindersRepository = FakeDataSource(
-            dataSource, Dispatchers.Main
-        )*/
     }
 
     @Test

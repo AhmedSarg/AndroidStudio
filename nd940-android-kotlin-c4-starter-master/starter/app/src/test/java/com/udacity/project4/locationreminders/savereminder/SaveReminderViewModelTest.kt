@@ -1,26 +1,20 @@
 package com.udacity.project4.locationreminders.savereminder
 
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.firebase.events.Event
 import com.udacity.project4.R
 import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.locationreminders.MainCoroutineRule
 import com.udacity.project4.locationreminders.data.FakeDataSource
-import com.udacity.project4.locationreminders.data.FakeTestRepository
 import com.udacity.project4.locationreminders.data.dto.ReminderDTO
 import com.udacity.project4.locationreminders.data.dto.Result
 import com.udacity.project4.locationreminders.getOrAwaitValue
 import com.udacity.project4.locationreminders.reminderslist.ReminderDataItem
-import com.udacity.project4.utils.SingleLiveEvent
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -28,10 +22,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.KoinComponent
+import org.koin.core.context.loadKoinModules
+import org.koin.core.inject
+import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-class SaveReminderViewModelTest {
+class SaveReminderViewModelTest : KoinComponent {
 
 
     //TODO: provide testing to the SaveReminderView and its live data objects
@@ -40,9 +38,8 @@ class SaveReminderViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var saveReminderViewModel: SaveReminderViewModel
+    private val saveReminderViewModel: SaveReminderViewModel by inject()
 
-    //private lateinit var remindersRepository : FakeTestRepository
     private lateinit var remindersSource: FakeDataSource
 
     @get:Rule
@@ -50,6 +47,7 @@ class SaveReminderViewModelTest {
 
     @Before
     fun setupViewModel() {
+        Log.i("ahmed", "in setup")
         remindersSource = FakeDataSource()
         val reminder1 = ReminderDTO(
             "title1",
@@ -67,8 +65,13 @@ class SaveReminderViewModelTest {
             33.0, 33.0
         )
         remindersSource.addReminders(reminder1, reminder2, reminder3)
-        saveReminderViewModel =
-            SaveReminderViewModel(ApplicationProvider.getApplicationContext(), remindersSource)
+        loadKoinModules(module {
+            single(override = true) {
+                SaveReminderViewModel(ApplicationProvider.getApplicationContext(), remindersSource)
+            }
+        })
+        /*saveReminderViewModel =
+            SaveReminderViewModel(ApplicationProvider.getApplicationContext(), remindersSource)*/
     }
 
     @Test
@@ -148,7 +151,10 @@ class SaveReminderViewModelTest {
             5.5, 5.5
         )
         saveReminderViewModel.validateAndSaveReminder(reminder)
-        assertThat(saveReminderViewModel.showSnackBarInt.getOrAwaitValue(), `is`(R.string.err_enter_title))
+        assertThat(
+            saveReminderViewModel.showSnackBarInt.getOrAwaitValue(),
+            `is`(R.string.err_enter_title)
+        )
         reminder = ReminderDataItem(
             "title5",
             "description5",
@@ -156,7 +162,10 @@ class SaveReminderViewModelTest {
             5.5, 5.5
         )
         saveReminderViewModel.validateAndSaveReminder(reminder)
-        assertThat(saveReminderViewModel.showSnackBarInt.getOrAwaitValue(), `is`(R.string.err_select_location))
+        assertThat(
+            saveReminderViewModel.showSnackBarInt.getOrAwaitValue(),
+            `is`(R.string.err_select_location)
+        )
         reminder = ReminderDataItem(
             "",
             "description5",
@@ -164,7 +173,10 @@ class SaveReminderViewModelTest {
             5.5, 5.5
         )
         saveReminderViewModel.validateAndSaveReminder(reminder)
-        assertThat(saveReminderViewModel.showSnackBarInt.getOrAwaitValue(), `is`(R.string.err_enter_title))
+        assertThat(
+            saveReminderViewModel.showSnackBarInt.getOrAwaitValue(),
+            `is`(R.string.err_enter_title)
+        )
         reminder = ReminderDataItem(
             "title5",
             "description5",
@@ -172,7 +184,10 @@ class SaveReminderViewModelTest {
             5.5, 5.5
         )
         saveReminderViewModel.validateAndSaveReminder(reminder)
-        assertThat(saveReminderViewModel.showSnackBarInt.getOrAwaitValue(), `is`(R.string.err_select_location))
+        assertThat(
+            saveReminderViewModel.showSnackBarInt.getOrAwaitValue(),
+            `is`(R.string.err_select_location)
+        )
     }
 
     @Test
@@ -184,7 +199,8 @@ class SaveReminderViewModelTest {
             5.5, 5.5
         )
         saveReminderViewModel.saveReminder(reminder)
-        val reminderSaved = ApplicationProvider.getApplicationContext<Context>().getString(R.string.reminder_saved)
+        val reminderSaved =
+            ApplicationProvider.getApplicationContext<Context>().getString(R.string.reminder_saved)
         assertThat(saveReminderViewModel.showToast.getOrAwaitValue(), `is`(reminderSaved))
     }
 
