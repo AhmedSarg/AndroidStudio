@@ -47,7 +47,6 @@ class SaveReminderViewModelTest : KoinComponent {
 
     @Before
     fun setupViewModel() {
-        Log.i("ahmed", "in setup")
         remindersSource = FakeDataSource()
         val reminder1 = ReminderDTO(
             "title1",
