@@ -18,12 +18,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.KoinComponent
 import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.koin.core.inject
 import org.koin.dsl.module
 
@@ -69,8 +71,11 @@ class SaveReminderViewModelTest : KoinComponent {
                 SaveReminderViewModel(ApplicationProvider.getApplicationContext(), remindersSource)
             }
         })
-        /*saveReminderViewModel =
-            SaveReminderViewModel(ApplicationProvider.getApplicationContext(), remindersSource)*/
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 
     @Test

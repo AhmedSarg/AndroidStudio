@@ -8,17 +8,20 @@ import com.udacity.project4.locationreminders.MainCoroutineRule
 import com.udacity.project4.locationreminders.data.FakeDataSource
 import com.udacity.project4.locationreminders.data.dto.ReminderDTO
 import com.udacity.project4.locationreminders.data.dto.Result
+import com.udacity.project4.locationreminders.getOrAwaitValue
 import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.KoinComponent
 import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.koin.core.inject
 import org.koin.dsl.module
 
@@ -65,6 +68,11 @@ class RemindersListViewModelTest : KoinComponent {
         })
     }
 
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
     @Test
     fun showLoading_loadBeforeAddAndEndAfterComplete() = runBlockingTest {
         mainCoroutineRule.pauseDispatcher()
@@ -76,10 +84,17 @@ class RemindersListViewModelTest : KoinComponent {
 
     @Test
     fun showSnackBar_returnTestException() = runBlockingTest {
-        remindersSource.setShouldReturnError(true)
+        remindersSource.setShouldReturnError()
         remindersListViewModel.loadReminders()
         val result = remindersSource.getReminders() as Result.Error
         assertThat(remindersListViewModel.showSnackBar.value, `is`(result.message))
+    }
+
+    @Test
+    fun showNoData_returnNoData() {
+        remindersSource.setShouldReturnError()
+        remindersListViewModel.loadReminders()
+        assertThat(remindersListViewModel.showNoData.value, `is`(true))
     }
 
 }
