@@ -88,7 +88,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
         setHasOptionsMenu(true)
         setDisplayHomeAsUpEnabled(true)
-        binding.button.text = getString(R.string.select_poi)
+        binding.selectLocation.text = getString(R.string.select_poi)
 //      TODO: add the map setup implementation
         val mapView = binding.mapView
         //val mapView = requireActivity().supportFragmentManager.findFragmentById(R.id.map)?.map as SupportMapFragment
@@ -96,10 +96,11 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         mapView.onResume()
         mapView.getMapAsync(this)
 //      TODO: zoom to the user location after taking his permission
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
 
 //      TODO: call this function after the user confirms on the selected location
-        binding.button.setOnClickListener {
+        binding.selectLocation.setOnClickListener {
             if (lastMarker != null)
                 onLocationSelected()
         }
@@ -112,7 +113,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         goToDeviceLocation()
 //      TODO: add style to the map
         setMapStyle(map)
-        /*setLongClick(map)*/
+        setLongClick(map)
 //      TODO: put a marker to location that the user selected
         setPoiClick(map)
     }
@@ -190,7 +191,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                     // Set the map's camera position to the current location of the device.
                     val location: Location = task.getResult()!!
                     val currentLatLng = LatLng(location.latitude, location.longitude)
-                    val update = newLatLngZoom(currentLatLng,18f)
+                    val update = newLatLngZoom(currentLatLng, 18f)
                     map.moveCamera(update)
                 }
             })
@@ -215,7 +216,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
-    /*private fun setLongClick(map: GoogleMap) {
+    private fun setLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
             if (lastMarker != null) {
                 lastMarker?.remove()
@@ -224,14 +225,16 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                 MarkerOptions().title("Dropped Pin").position(latLng)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
             )
+            val poi : PointOfInterest = PointOfInterest(latLng,"Dropped Pin", "Dropped Pin")
             marker.showInfoWindow()
             lastMarker = marker
             str = marker.title
             lat = marker.position.latitude
             lng = marker.position.longitude
-            binding.button.text = getString(R.string.save)
+            poiMark = poi
+            binding.selectLocation.text = getString(R.string.save)
         }
-    }*/
+    }
 
 
     private fun setPoiClick(map: GoogleMap) {
@@ -249,8 +252,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             lng = poiMarker.position.longitude
             poiMark = poi
             lastMarker = poiMarker
-            binding.button.text = getString(R.string.save)
+            binding.selectLocation.text = getString(R.string.save)
         }
     }
-
 }

@@ -36,7 +36,7 @@ import org.junit.runner.RunWith
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class TasksDaoTest {
+class       TasksDaoTest {
 
     private lateinit var database: ToDoDatabase
 
