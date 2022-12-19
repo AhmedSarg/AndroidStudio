@@ -48,8 +48,8 @@ class FakeDataSource(var reminders: MutableList<ReminderDTO>? = mutableListOf())
         reminders?.clear()
     }
 
-    fun addReminders(vararg reminderss: ReminderDTO) {
-        for (reminder in reminderss) {
+    fun addReminders(vararg newReminders: ReminderDTO) {
+        for (reminder in newReminders) {
             reminders?.add(reminder)
         }
     }
