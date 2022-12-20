@@ -7,7 +7,8 @@
     <string name="reminder_desc">Description</string>
     <string name="reminder_location">Reminder Location</string>
     <string name="reminder_coordinates">Reminder Coordinates</string>
-    //<string name="coordinates_format">Latitude: %d , Longitude: %d</string>
+    //
+    <string name="coordinates_format">Latitude: %d , Longitude: %d</string>
     <string name="save">Save</string>
     <string name="reminder_saved">Reminder Saved !</string>
     <string name="logout">Logout</string>
@@ -42,4 +43,7 @@
     <string name="geofence_too_many_geofences">Your app has registered too many geofences.</string>
     <string name="geofence_too_many_pending_intents">You have provided too many PendingIntents to the addGeofences() call.</string>
     <string name="error_adding_geofence">Error Happened, Can\'t Add Geofence</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login_txt_label">Login To Start App</string>
+    <string name="login_txt_button">Login</string>
 </resources>
