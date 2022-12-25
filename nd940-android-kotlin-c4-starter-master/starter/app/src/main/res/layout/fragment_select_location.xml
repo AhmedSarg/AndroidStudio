@@ -12,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/select_location_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--TODO: Add the map fragment for the user to select the location-->
@@ -58,7 +59,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:Context=".locationreminders.savereminder.selectreminderlocation" />-->
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,6 @@ import kotlinx.coroutines.*
  */
 class RemindersLocalRepository internal constructor (
     private val remindersDao: RemindersDao,
-    //private val remindersDao: ReminderDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ReminderDataSource {
 
@@ -26,7 +25,6 @@ class RemindersLocalRepository internal constructor (
     override suspend fun getReminders(): Result<List<ReminderDTO>> = withContext(ioDispatcher) {
         return@withContext try {
             Result.Success(remindersDao.getReminders())
-            //remindersDao.getReminders()
         } catch (ex: Exception) {
             Result.Error(ex.localizedMessage)
         }
@@ -51,7 +49,6 @@ class RemindersLocalRepository internal constructor (
             val reminder = remindersDao.getReminderById(id)
             if (reminder != null) {
                 return@withContext Result.Success(reminder)
-                //return@withContext reminder
             } else {
                 return@withContext Result.Error("Reminder not found!")
             }

@@ -13,8 +13,6 @@ import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
-private const val TAG = "JobIntentService"
-
 class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
 
     private var coroutineJob: Job = Job()

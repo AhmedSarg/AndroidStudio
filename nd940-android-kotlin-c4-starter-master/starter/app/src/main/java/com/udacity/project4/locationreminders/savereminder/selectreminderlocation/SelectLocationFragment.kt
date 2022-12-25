@@ -1,66 +1,35 @@
 package com.udacity.project4.locationreminders.savereminder.selectreminderlocation
 
-
-import android.Manifest
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.location.LocationManager
-import android.location.LocationProvider
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.location.LocationManagerCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
-import com.google.android.material.snackbar.Snackbar
 import com.udacity.project4.R
 import com.udacity.project4.base.BaseFragment
-import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.databinding.FragmentSelectLocationBinding
 import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
 import com.udacity.project4.utils.setDisplayHomeAsUpEnabled
 import org.koin.android.ext.android.inject
-import java.lang.Exception
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom
-
-import com.google.android.gms.maps.model.CameraPosition
-
 import com.google.android.gms.maps.model.MarkerOptions
-
 import com.google.android.gms.maps.model.LatLng
-
 import com.google.android.gms.maps.GoogleMap
-
 import com.google.android.gms.maps.OnMapReadyCallback
-import kotlinx.android.synthetic.main.fragment_select_location.*
-import java.util.*
-import android.location.Criteria
 import android.location.Location
-import android.telephony.CarrierConfigManager
-import androidx.appcompat.app.AppCompatActivity
-
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.maps.CameraUpdate
-
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.tasks.Task
 
+private const val REQUEST_LOCATION_PERMISSION = 1
+private val TAG = SelectLocationFragment::class.java.simpleName
 
 class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
@@ -68,9 +37,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     override val _viewModel: SaveReminderViewModel by inject()
     private lateinit var binding: FragmentSelectLocationBinding
     private lateinit var map: GoogleMap
-    private val REQUEST_LOCATION_PERMISSION = 1
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private val TAG = SelectLocationFragment::class.java.simpleName
     private var lastMarker: Marker? = null
     private var str: String = ""
     private lateinit var poiMark: PointOfInterest
@@ -79,7 +46,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_select_location, container, false)
 
@@ -91,7 +58,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         binding.selectLocation.text = getString(R.string.select_poi)
 //      TODO: add the map setup implementation
         val mapView = binding.mapView
-        //val mapView = requireActivity().supportFragmentManager.findFragmentById(R.id.map)?.map as SupportMapFragment
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
         mapView.getMapAsync(this)
@@ -177,7 +143,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.size > 0 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 enableMyLocation()
             }
         }
@@ -235,7 +201,6 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             binding.selectLocation.text = getString(R.string.save)
         }
     }
-
 
     private fun setPoiClick(map: GoogleMap) {
         map.setOnPoiClickListener { poi ->

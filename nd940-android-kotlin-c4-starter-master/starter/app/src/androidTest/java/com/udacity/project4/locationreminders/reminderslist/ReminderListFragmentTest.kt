@@ -1,45 +1,31 @@
 package com.udacity.project4.locationreminders.reminderslist
 
 import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.udacity.project4.R
-import com.udacity.project4.locationreminders.RemindersActivity
 import com.udacity.project4.locationreminders.data.FakeAndroidTestRepository
-import com.udacity.project4.locationreminders.data.ReminderDataSource
 import com.udacity.project4.locationreminders.data.dto.ReminderDTO
-import com.udacity.project4.locationreminders.data.local.LocalDB
-import com.udacity.project4.locationreminders.data.local.RemindersLocalRepository
-import com.udacity.project4.locationreminders.savereminder.SaveReminderFragment
-import com.udacity.project4.locationreminders.savereminder.SaveReminderFragmentDirections
-import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
-import com.udacity.project4.util.monitorActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.AutoCloseKoinTest
-import org.koin.test.get
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
@@ -108,7 +94,7 @@ class ReminderListFragmentTest : AutoCloseKoinTest() {
 
         datasource.addReminders(reminder)
 
-        val activityScenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
+        launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
 
         onView(ViewMatchers.withText("title")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         onView(ViewMatchers.withText("description")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
@@ -119,8 +105,8 @@ class ReminderListFragmentTest : AutoCloseKoinTest() {
 //    TODO: add testing for the error messages.
     @Test
     fun reminderListFragmentTest_notDisplayedInUi() {
-        val activityScenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
-        onView(ViewMatchers.withId(R.id.noDataTextView)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
+        onView(withId(R.id.noDataTextView)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
 }

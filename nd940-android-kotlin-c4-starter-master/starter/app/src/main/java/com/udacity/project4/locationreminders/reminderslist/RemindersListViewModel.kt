@@ -58,12 +58,3 @@ class RemindersListViewModel(
         showNoData.value = remindersList.value == null || remindersList.value!!.isEmpty()
     }
 }
-
-/*
-@Suppress("UNCHECKED_CAST")
-class RemindersListViewModelFactory (
-    private val remindersRepository: RemindersRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (RemindersListViewModel(remindersRepository) as T)
-}*/

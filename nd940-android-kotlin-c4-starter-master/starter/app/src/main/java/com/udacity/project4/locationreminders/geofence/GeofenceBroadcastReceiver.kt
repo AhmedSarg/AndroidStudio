@@ -3,7 +3,6 @@ package com.udacity.project4.locationreminders.geofence
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.udacity.project4.locationreminders.geofence.GeofenceTransitionsJobIntentService.Companion.enqueueWork
 
 /**
@@ -15,8 +14,6 @@ import com.udacity.project4.locationreminders.geofence.GeofenceTransitionsJobInt
  * To do that you can use https://developer.android.com/reference/android/support/v4/app/JobIntentService to do that.
  *
  */
-
-private const val TAG = "GeofenceReceiver"
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
