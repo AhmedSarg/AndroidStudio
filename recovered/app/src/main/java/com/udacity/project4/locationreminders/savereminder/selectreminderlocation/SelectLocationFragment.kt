@@ -130,12 +130,11 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+            ) === PackageManager.PERMISSION_GRANTED
         ) {
             map.isMyLocationEnabled = true
         } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
+            requestPermissions(
                 arrayOf(ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )

@@ -2,6 +2,7 @@ package com.udacity.project4.locationreminders.savereminder
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.common.api.ResolvableApiException
@@ -43,6 +45,7 @@ class SaveReminderFragment : BaseFragment() {
     override val _viewModel: SaveReminderViewModel by inject()
     private lateinit var binding: FragmentSaveReminderBinding
     private lateinit var geofencingClient: GeofencingClient
+    private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
 
     private val geofencePendingIntent: PendingIntent by lazy {
         val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
@@ -75,10 +78,6 @@ class SaveReminderFragment : BaseFragment() {
 
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 checkDeviceLocationSettings()
-                //binding.selectLocation.isEnabled = false
-                //Handler().postDelayed({
-                //    binding.selectLocation.isEnabled = true
-                //}, 5000)
             } else if (ContextCompat.checkSelfPermission(
                     requireContext(),
                     ACCESS_FINE_LOCATION
@@ -126,7 +125,7 @@ class SaveReminderFragment : BaseFragment() {
                 }.show()
             } else {
 
-                val title = _viewModel.reminderTitle.value
+                /*val title = _viewModel.reminderTitle.value
                 val description = _viewModel.reminderDescription.value
                 val location = _viewModel.reminderSelectedLocationStr.value
                 val latitude = _viewModel.latitude.value
@@ -184,7 +183,7 @@ class SaveReminderFragment : BaseFragment() {
                                 }
                         }
                     }
-                }
+                }*/
             }
         }
     }
@@ -197,15 +196,31 @@ class SaveReminderFragment : BaseFragment() {
         val settingsClient = LocationServices.getSettingsClient(requireContext())
         val locationSettingsResponseTask = settingsClient.checkLocationSettings(builder.build())
         locationSettingsResponseTask.addOnFailureListener { exception ->
-            if (exception is ResolvableApiException && resolve) {
+            /*if (exception is ResolvableApiException && resolve) {
                 try {
                     exception.startResolutionForResult(
                         requireActivity(),
                         REQUEST_TURN_DEVICE_LOCATION_ON
                     )
                 } catch (sendEx: IntentSender.SendIntentException) {
-                    Log.i("ahmed", "check catch")
                     Log.i("ahmed", "Error getting location settings resolution: " + sendEx.message)
+                }*/
+            if (exception is ResolvableApiException && resolve) {
+                try {
+
+                    startIntentSenderForResult(
+                        exception.resolution.intentSender,
+                        REQUEST_TURN_DEVICE_LOCATION_ON,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null
+                    )
+
+
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    Log.d("ahmed", "Error getting location settings resolution: " + sendEx.message)
                 }
             } else {
                 Snackbar.make(
@@ -215,6 +230,85 @@ class SaveReminderFragment : BaseFragment() {
                 ).setAction(R.string.retry) {
                     checkDeviceLocationSettings()
                 }.show()
+            }
+        }
+    }
+
+    @TargetApi(29)
+    private fun foregroundAndBackgroundLocationPermissionApproved(): Boolean {
+        val foregroundLocationApproved = (
+                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(requireContext(), ACCESS_FINE_LOCATION))
+        val backgroundPermissionApproved =
+            if (runningQOrLater) {
+                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(requireContext(),
+                    android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
+            } else {
+                true
+            }
+        return foregroundLocationApproved && backgroundPermissionApproved
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val title = _viewModel.reminderTitle.value
+        val description = _viewModel.reminderDescription.value
+        val location = _viewModel.reminderSelectedLocationStr.value
+        val latitude = _viewModel.latitude.value
+        val longitude = _viewModel.longitude.value
+//          TODO: use the user entered reminder details to:
+//           1) add a geofencing request
+//           2) save the reminder to the local db
+
+        val reminder = ReminderDataItem(
+            title,
+            description,
+            location,
+            latitude,
+            longitude
+        )
+
+        if (_viewModel.validateEnteredData(reminder)) {
+
+            val geofence = Geofence.Builder()
+                .setRequestId(reminder.id)
+                .setCircularRegion(
+                    latitude!!,
+                    longitude!!,
+                    30f
+                )
+                .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .build()
+
+            val geofencingRequest = GeofencingRequest.Builder()
+                .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                .addGeofence(geofence)
+                .build()
+
+            geofencingClient = LocationServices.getGeofencingClient(requireActivity())
+            geofencingClient.removeGeofences(geofencePendingIntent)?.run {
+                addOnCompleteListener {
+                    geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent)
+                        ?.run {
+                            addOnSuccessListener {
+                                Toast.makeText(
+                                    requireActivity(), "Geofence Added",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                _viewModel.validateAndSaveReminder(
+                                    reminder
+                                )
+                            }
+                            addOnFailureListener {
+                                Toast.makeText(
+                                    requireActivity(), "Geofence Not Added :(",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                }
             }
         }
     }
