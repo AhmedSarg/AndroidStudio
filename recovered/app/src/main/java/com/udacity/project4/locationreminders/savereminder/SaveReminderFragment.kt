@@ -301,7 +301,7 @@ class SaveReminderFragment : BaseFragment() {
                             ?.run {
                                 addOnSuccessListener {
                                     /*Toast.makeText(
-                                        requireContext(), "Geofence Added",
+                                        requireActivity(), "Geofence Added",
                                         Toast.LENGTH_SHORT
                                     ).show()*/
                                     _viewModel.validateAndSaveReminder(
