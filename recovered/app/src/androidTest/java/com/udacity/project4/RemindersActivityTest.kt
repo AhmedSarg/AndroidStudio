@@ -2,7 +2,6 @@ package com.udacity.project4
 
 import android.app.Activity
 import android.app.Application
-import android.util.Log
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.core.app.launchActivity
@@ -25,7 +24,6 @@ import com.udacity.project4.util.monitorActivity
 import com.udacity.project4.utils.EspressoIdlingResource
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matchers.not
-import androidx.test.espresso.Root
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -38,12 +36,7 @@ import org.koin.test.AutoCloseKoinTest
 import org.koin.test.get
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.rule.ActivityTestRule
 import kotlinx.android.synthetic.main.activity_reminders.view.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.Matchers.`is`
-import org.junit.Rule
 
 
 @RunWith(AndroidJUnit4::class)
