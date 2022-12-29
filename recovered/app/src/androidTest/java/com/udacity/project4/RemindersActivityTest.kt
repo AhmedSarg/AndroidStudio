@@ -160,9 +160,6 @@ class RemindersActivityTest :
 
     }
 
-    /*@get:Rule
-    val activityRule = ActivityTestRule(RemindersActivity::class.java)*/
-
     @Test
     fun showToast_geofenceAdded() {
 
@@ -184,15 +181,6 @@ class RemindersActivityTest :
         onView(withId(R.id.mapView)).perform(longClick())
         onView(withId(R.id.select_location)).perform(click())
         onView(withId(R.id.saveReminder)).perform(click())
-        /*Log.i("ahmed", "check 1")
-        onView(withText("Reminder Saved !")).inRoot(withDecorView(not(`is`(activityRule.activity.window.decorView)))).check(
-            matches(isDisplayed())
-        )
-        Log.i("ahmed", "check 2")*/
-        /*Log.i("ahmed", onView(withText("Geofence Added")).inRoot(withDecorView(not(getActivity(activityScenario)?.window?.decorView))).check(
-            matches(not(isDisplayed()))
-        )
-        .toString())*/
         onView(withText("Reminder Saved !")).inRoot(withDecorView(not(getActivity(activityScenario)?.window?.decorView))).check(
             matches(isDisplayed())
         )
