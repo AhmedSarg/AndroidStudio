@@ -2,6 +2,7 @@ package com.udacity.project4.locationreminders.savereminder.selectreminderlocati
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Bundle
@@ -27,8 +28,11 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Handler
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
+import com.udacity.project4.locationreminders.REQUEST_TURN_DEVICE_LOCATION_ON
 import kotlinx.coroutines.Dispatchers
 
 private const val REQUEST_LOCATION_PERMISSION = 1
@@ -130,14 +134,63 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 ACCESS_FINE_LOCATION
-            ) === PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             map.isMyLocationEnabled = true
+
+            val locationManager =
+                requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                checkDeviceLocationSettings()
         } else {
             requestPermissions(
                 arrayOf(ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSION
             )
+        }
+    }
+
+    private fun checkDeviceLocationSettings(resolve: Boolean = true) {
+        val locationRequest = LocationRequest.create().apply {
+            priority = LocationRequest.PRIORITY_LOW_POWER
+        }
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        val settingsClient = LocationServices.getSettingsClient(requireContext())
+        val locationSettingsResponseTask = settingsClient.checkLocationSettings(builder.build())
+        locationSettingsResponseTask.addOnFailureListener { exception ->
+            /*if (exception is ResolvableApiException && resolve) {
+                try {
+                    exception.startResolutionForResult(
+                        requireActivity(),
+                        REQUEST_TURN_DEVICE_LOCATION_ON
+                    )
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    Log.i("ahmed", "Error getting location settings resolution: " + sendEx.message)
+                }*/
+            if (exception is ResolvableApiException && resolve) {
+                try {
+                    startIntentSenderForResult(
+                        exception.resolution.intentSender,
+                        REQUEST_TURN_DEVICE_LOCATION_ON,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null
+                    )
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    Log.d("ahmed", "Error getting location settings resolution: " + sendEx.message)
+                }
+            } else {
+                Snackbar.make(
+                    binding.selectLocationContainer,
+                    R.string.location_required_error,
+                    Snackbar.LENGTH_INDEFINITE
+                ).setAction(R.string.retry) {
+                    checkDeviceLocationSettings()
+                }.show()
+            }
         }
     }
 

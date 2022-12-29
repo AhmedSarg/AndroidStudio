@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_reminders.*
  */
 const val REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE = 33
 const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
-val REQUEST_TURN_DEVICE_LOCATION_ON = 29
+const val REQUEST_TURN_DEVICE_LOCATION_ON = 29
 const val LOCATION_PERMISSION_INDEX = 0
 const val BACKGROUND_LOCATION_PERMISSION_INDEX = 1
 
@@ -39,7 +39,7 @@ class RemindersActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRemindersBinding
     private lateinit var geofencingClient : GeofencingClient
-    private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
+    //private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +48,12 @@ class RemindersActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
-        checkPermissions()
-    }
+        //checkPermissions()
+    }*/
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 0) {
             checkDeviceLocationSettings(false)
@@ -150,7 +150,7 @@ class RemindersActivity : AppCompatActivity() {
             permissionsArray,
             resultCode
         )
-    }
+    }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
